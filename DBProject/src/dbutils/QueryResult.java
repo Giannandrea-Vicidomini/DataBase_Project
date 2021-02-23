@@ -146,7 +146,7 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 		
 		JTable table = new JTable(toStringMatrix(),labels);
 		table.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
-		table.setRowHeight(40);
+		table.setRowHeight(50);
 		table.setForeground(new Color(10, 124, 235));
 		table.setShowGrid(true);
 		table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
