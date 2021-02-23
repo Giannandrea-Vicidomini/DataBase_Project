@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.swing.JTable;
-import javax.swing.UIManager;
+
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.MatteBorder;
+
 import javax.swing.table.JTableHeader;
 
 
@@ -143,8 +143,6 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 	}
 	
 	public JTable getTable() {
-		
-		
 		
 		JTable table = new JTable(toStringMatrix(),labels);
 		table.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
