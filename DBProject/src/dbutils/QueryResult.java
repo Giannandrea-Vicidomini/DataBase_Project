@@ -1,10 +1,18 @@
 package dbutils;
+import java.awt.Color;
+import java.awt.Font;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.JTableHeader;
 
 
 
@@ -60,6 +68,10 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 			return bld.toString();
 			
 		}
+		
+		public String get(int pos) {
+			return convert(elements.get(pos),types[pos]);
+		}
 	}
 	
 	private String labels[];
@@ -100,11 +112,54 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 	public int getRowsReturned() {
 		return rows.size();
 	}
+	
+	public int getColumnCount() {
+		return labels.length;
+	}
+	
+	public String getElement(int row, int column) {
+		return rows.get(row).get(column);
+	}
 
 	@Override
 	public Iterator<Row> iterator() {
 		// TODO Auto-generated method stub
 		return rows.iterator();
+	}
+	
+	public String[][] toStringMatrix(){
+		int rows = getRowsReturned();
+		int columns = getColumnCount();
+		
+		String[][] table = new String[rows][columns];
+		
+		for(int i=0; i<rows ;i++) {
+			for(int j = 0; j<columns; j++) {
+				table[i][j] = getElement(i, j);
+			}
+		}
+		
+		return table;
+	}
+	
+	public JTable getTable() {
+		
+		
+		
+		JTable table = new JTable(toStringMatrix(),labels);
+		table.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+		table.setRowHeight(40);
+		table.setForeground(new Color(10, 124, 235));
+		table.setShowGrid(true);
+		table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+		table.setGridColor(Color.BLUE);
+		
+		JTableHeader tableHeader = table.getTableHeader();
+	    tableHeader.setBackground(new Color(30, 144, 255));
+	    tableHeader.setForeground(Color.white);
+	    tableHeader.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+	    
+		return table;
 	}
 
 }

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +16,8 @@ import dbutils.DBCredentials;
 import dbutils.QueryManager;
 import dbutils.QueryResult;
 
-import java.awt.ScrollPane;
-import javax.swing.JTextArea;
+
+
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Color;
@@ -24,6 +26,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -37,8 +40,7 @@ public class MainWindow {
 	private static final int width = 950;
 	private static final int height = 670;
 	private JFrame frame;
-	private ScrollPane scrollPane;
-	private JTextArea textArea;
+	private JScrollPane scrollPane;
 	private JLabel updateQuery;
 	private JLabel searchQuery;
 	private JTextField searchField;
@@ -119,20 +121,11 @@ public class MainWindow {
         menu1.add(tableInfo);
         mb.add(menu1);
         frame.setJMenuBar(mb);
-        
-		
-		textArea = new JTextArea();
-		textArea.setBackground(new Color(248, 248, 248));
-		textArea.setEditable(false);
-		textArea.setForeground(new Color(30, 144, 255));
-		textArea.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
-		textArea.setBounds(162, 497, 1, 16);
 		//frame.getContentPane().add(textArea);
 		
 		
-		scrollPane = new ScrollPane();
-		scrollPane.setBounds(10, 359, 930, 279);
-		scrollPane.add(textArea);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 358, 930, 261);
 		frame.getContentPane().add(scrollPane);
 		
 		JSeparator separator = new JSeparator();
@@ -149,6 +142,14 @@ public class MainWindow {
 		searchQuery.setForeground(new Color(30, 144, 255));
 		searchQuery.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
 		searchQuery.setBounds(10, 240, 77, 28);
+		searchQuery.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				searchField.setText("select * from account");
+			}
+			
+		});
 		frame.getContentPane().add(searchQuery);
 		
 		searchField = new JTextField();
@@ -175,7 +176,7 @@ public class MainWindow {
 			
 			//DO QUERY
 			QueryResult result = null;
-			textArea.setText("");
+			scrollPane.setViewportView(null);
 			
 			String query = searchField.getText();
 			if(query == null || query.equals("")) {
@@ -195,10 +196,15 @@ public class MainWindow {
 			}
 			
 			JOptionPane.showMessageDialog(frame,String.format("The query was successful!\n%d row(s) returned.",result.getRowsReturned()));
+			/*
 			for(QueryResult.Row row : result) {
 				
 				textArea.append(row.toString()+"\n\n");
 			}
+			*/
+			var table = result.getTable();
+			scrollPane.setViewportView(table);
+			table.validate();
 			
 			searchField.setText("");
 			
@@ -215,7 +221,7 @@ public class MainWindow {
 			
 			//DO UPDATE
 			int affectedRows = 0;
-			textArea.setText("");
+			scrollPane.setViewportView(null);
 
 			String query = updateField.getText();
 			if(query == null || query.equals("")) {
