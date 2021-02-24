@@ -139,7 +139,7 @@ public class MainWindow {
          * 
          * 
          * 
-         *     ADDING QUERIES HERE
+         *     ADDING QUERIES HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * 
          * 
          */
@@ -170,7 +170,7 @@ public class MainWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				int index = rng.nextInt(tables.size());
+				int index = rng.nextInt(tables.size()-1);
 				searchField.setText(String.format("select * from %s",tables.get(index)));
 			}
 			
