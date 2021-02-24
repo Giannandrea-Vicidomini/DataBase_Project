@@ -1,15 +1,16 @@
 package screens;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import java.sql.SQLException;
-import java.util.Arrays;
+
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -39,6 +40,7 @@ import javax.swing.JPanel;
 
 public class MainWindow {
 	
+	private Random rng;
 	private List<String> tables;
 	private DBCredentials dbInfo;
 	private int x,y;
@@ -61,6 +63,7 @@ public class MainWindow {
 	 * Launch the application.
 	 */
 	
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -80,13 +83,14 @@ public class MainWindow {
 		});
 	}
 	
-
+	*/
 	/**
 	 * Create the application.
 	 */
 	public MainWindow(DBCredentials dbInfo, List<String> dbtables) {
 		
 		this.tables = dbtables;
+		this.rng = new Random();
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int y = screenSize.height/2 - height/2;
@@ -165,7 +169,9 @@ public class MainWindow {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				searchField.setText("select * from account");
+				
+				int index = rng.nextInt(tables.size());
+				searchField.setText(String.format("select * from %s",tables.get(index)));
 			}
 			
 		});
@@ -221,7 +227,7 @@ public class MainWindow {
 				textArea.append(row.toString()+"\n\n");
 			}
 			*/
-			var table = result.getTable();
+			var table = result.getResultTable();
 			scrollPane.setViewportView(table);
 			table.validate();
 			

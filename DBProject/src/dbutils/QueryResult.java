@@ -142,7 +142,7 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 		return table;
 	}
 	
-	public JTable getTable() {
+	public JTable getResultTable() {
 		
 		JTable table = new JTable(toStringMatrix(),labels);
 		table.setFont(new Font("Helvetica Neue", Font.BOLD, 15));

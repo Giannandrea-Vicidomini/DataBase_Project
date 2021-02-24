@@ -8,8 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import dbutils.DBCredentials;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class LoginWindow {
 
@@ -145,6 +149,26 @@ public class LoginWindow {
 		schemaField.setColumns(10);
 		schemaField.setBounds(219, 186, 194, 32);
 		frame.getContentPane().add(schemaField);
+		
+		JLabel optionbtn = new JLabel("");
+		ImageIcon imageIcon = new ImageIcon(LoginWindow.class.getResource("/resources/cogwheel.png"));
+		Image image1 = imageIcon.getImage(); // transform it 
+		Image newimg = image1.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);
+		optionbtn.setIcon(imageIcon);
+		optionbtn.setBounds(574, 6, 20, 25);
+		optionbtn.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textField.setText("root");
+				passwordField.setText("rootngul");
+				schemaField.setText("steam");
+			}
+		
+		}); 
+			
+		frame.getContentPane().add(optionbtn);
 		
 		frame.setVisible(true);
 	}
