@@ -58,6 +58,8 @@ public class MainWindow {
 	private JPanel banner;
 	private JLabel bannerLogo;
 	private JMenu queryMenu;
+	private JMenu optionMenu;
+	private JMenuItem logOutItem;
 
 	/**
 	 * Launch the application.
@@ -117,21 +119,6 @@ public class MainWindow {
 		JMenuBar mb = new JMenuBar();
 		mb.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
 		mb.setForeground(new Color(30, 144, 255));
-		
-        JMenu menu1 = new JMenu("Help");
-        
-        JMenuItem tableInfo = new JMenuItem("DB Info");
-        tableInfo.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        tableInfo.setForeground(new Color(30, 144, 255));
-        tableInfo.addActionListener((ActionEvent e)->{
-        	
-        	String message = buildHelpMessage();
-        	
-        	JOptionPane.showMessageDialog(frame,message);
-        });
-        
-        menu1.add(tableInfo);
-        mb.add(menu1);
         frame.setJMenuBar(mb);
         
         queryMenu = new JMenu("Default Queries");
@@ -144,6 +131,34 @@ public class MainWindow {
          * 
          */
         mb.add(queryMenu);
+        
+        JMenu menu1 = new JMenu("Help");
+        
+        JMenuItem tableInfo = new JMenuItem("DB Info");
+        tableInfo.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        tableInfo.setForeground(new Color(30, 144, 255));
+        tableInfo.addActionListener((ActionEvent e)->{
+        	
+        	String message = buildHelpMessage();
+        	
+        	JOptionPane.showMessageDialog(frame,message);
+        });
+        
+        optionMenu = new JMenu("Options");
+        mb.add(optionMenu);
+        
+        logOutItem = new JMenuItem("log out");
+        logOutItem.setForeground(new Color(30, 144, 255));
+        logOutItem.setBackground(new Color(255, 255, 255));
+        logOutItem.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        logOutItem.addActionListener((ActionEvent e)->{
+        	new LoginWindow();
+        	frame.dispose();
+        });
+        optionMenu.add(logOutItem);
+        
+        menu1.add(tableInfo);
+        mb.add(menu1);
 		//frame.getContentPane().add(textArea);
 		
 		
