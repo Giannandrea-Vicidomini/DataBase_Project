@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -60,6 +61,8 @@ public class MainWindow {
 	private JMenu queryMenu;
 	private JMenu optionMenu;
 	private JMenuItem logOutItem;
+	private ActionListener updateQueryMethod;
+	private ActionListener retrieveQueryMethod;
 
 	/**
 	 * Launch the application.
@@ -108,6 +111,74 @@ public class MainWindow {
 	 * Initialise the contents of the frame.
 	 */
 	private void initialize() {
+		
+		updateQueryMethod = (ActionEvent e)->{
+			
+			//DO UPDATE
+			int affectedRows = 0;
+			scrollPane.setViewportView(null);
+
+			String query = updateField.getText();
+			if(query == null || query.equals("")) {
+				JOptionPane.showMessageDialog(frame, "The field is empty...");
+				return;
+			}
+			
+			try {
+				affectedRows = QueryManager.genericUpdate(dbInfo,query);
+			}
+			catch(SQLException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(frame, e1.getMessage());
+				updateField.setText("");
+				return;
+			}
+			
+			JOptionPane.showMessageDialog(frame,String.format("The update was successful!\n%d row(s) affected.",affectedRows));
+			updateField.setText("");
+			
+		};
+		
+		retrieveQueryMethod = (ActionEvent e)->{
+			
+			//DO QUERY
+			QueryResult result = null;
+			scrollPane.setViewportView(null);
+			
+			String query = searchField.getText();
+			if(query == null || query.equals("")) {
+				JOptionPane.showMessageDialog(frame, "The field is empty...");
+				return;
+			}
+			
+			try {
+				result = QueryManager.genericQuery(dbInfo, query);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(frame, e1.getMessage());
+				searchField.setText("");
+				return;
+				
+			}
+			
+			JOptionPane.showMessageDialog(frame,String.format("The query was successful!\n%d row(s) returned.",result.getRowsReturned()));
+			/*
+			for(QueryResult.Row row : result) {
+				
+				textArea.append(row.toString()+"\n\n");
+			}
+			*/
+			var table = result.getResultTable();
+			scrollPane.setViewportView(table);
+			table.validate();
+			
+			searchField.setText("");
+			
+		};
+		
+		
+		
 		frame = new JFrame();
 		frame.setTitle(String.format("%s WorkBench",dbInfo.getDbName().toUpperCase()));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -212,43 +283,7 @@ public class MainWindow {
 		searchButton.setForeground(new Color(30, 144, 255));
 		searchButton.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
 		searchButton.setBounds(823, 239, 117, 29);
-		searchButton.addActionListener((ActionEvent e)->{
-			
-			//DO QUERY
-			QueryResult result = null;
-			scrollPane.setViewportView(null);
-			
-			String query = searchField.getText();
-			if(query == null || query.equals("")) {
-				JOptionPane.showMessageDialog(frame, "The field is empty...");
-				return;
-			}
-			
-			try {
-				result = QueryManager.genericQuery(dbInfo, query);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(frame, e1.getMessage());
-				searchField.setText("");
-				return;
-				
-			}
-			
-			JOptionPane.showMessageDialog(frame,String.format("The query was successful!\n%d row(s) returned.",result.getRowsReturned()));
-			/*
-			for(QueryResult.Row row : result) {
-				
-				textArea.append(row.toString()+"\n\n");
-			}
-			*/
-			var table = result.getResultTable();
-			scrollPane.setViewportView(table);
-			table.validate();
-			
-			searchField.setText("");
-			
-		});
+		searchButton.addActionListener(retrieveQueryMethod);
 		frame.getContentPane().add(searchButton);
 		
 		//BUTTON THAT PERFROMS UPDATES
@@ -257,32 +292,7 @@ public class MainWindow {
 		updateButton.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
 		updateButton.setBackground(new Color(30, 144, 255));
 		updateButton.setBounds(823, 290, 117, 29);
-		updateButton.addActionListener((ActionEvent e)->{
-			
-			//DO UPDATE
-			int affectedRows = 0;
-			scrollPane.setViewportView(null);
-
-			String query = updateField.getText();
-			if(query == null || query.equals("")) {
-				JOptionPane.showMessageDialog(frame, "The field is empty...");
-				return;
-			}
-			
-			try {
-				affectedRows = QueryManager.genericUpdate(dbInfo,query);
-			}
-			catch(SQLException e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(frame, e1.getMessage());
-				updateField.setText("");
-				return;
-			}
-			
-			JOptionPane.showMessageDialog(frame,String.format("The update was successful!\n%d row(s) affected.",affectedRows));
-			updateField.setText("");
-			
-		});
+		updateButton.addActionListener(updateQueryMethod);
 		frame.getContentPane().add(updateButton);
 		
 		separator_1 = new JSeparator();
