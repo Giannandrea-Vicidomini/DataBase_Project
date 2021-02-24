@@ -22,7 +22,6 @@ public class Main {
 					System.out.println("Window launched  ---"+window+"---");
 					
 				} catch (Exception e) {
-					
 					e.printStackTrace();
 				}
 			}

@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,9 @@ import dbutils.QueryResult;
 
 import javax.swing.JSeparator;
 import java.awt.Font;
+
+import java.awt.Image;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,9 +32,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+
 
 public class MainWindow {
 	
@@ -48,6 +53,9 @@ public class MainWindow {
 	private JButton searchButton;
 	private JButton updateButton;
 	private JSeparator separator_1;
+	private JPanel banner;
+	private JLabel bannerLogo;
+	private JMenu queryMenu;
 
 	/**
 	 * Launch the application.
@@ -121,6 +129,17 @@ public class MainWindow {
         menu1.add(tableInfo);
         mb.add(menu1);
         frame.setJMenuBar(mb);
+        
+        queryMenu = new JMenu("Default Queries");
+        /*
+         * 
+         * 
+         * 
+         *     ADDING QUERIES HERE
+         * 
+         * 
+         */
+        mb.add(queryMenu);
 		//frame.getContentPane().add(textArea);
 		
 		
@@ -249,6 +268,32 @@ public class MainWindow {
 		separator_1.setBounds(10, 209, 930, 12);
 		frame.getContentPane().add(separator_1);
 		
+		banner = new JPanel();
+		banner.setBackground(new Color(30, 144, 255));
+		banner.setBounds(10, 6, 930, 200);
+		frame.getContentPane().add(banner);
+		banner.setLayout(null);
+		
+		JLabel SQLogo = new JLabel("");
+		ImageIcon imageIcon = new ImageIcon(MainWindow.class.getResource("/resources/sql.png"));
+		Image image1 = imageIcon.getImage(); // transform it 
+		Image newimg = image1.getScaledInstance(250, 180,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg); 
+		
+		SQLogo.setIcon(imageIcon);
+		SQLogo.setBounds(6, 6, 270, 188);
+		//SQLogo.setIcon(new ImageIcon(getClass().getResource("/resource/sql.png")));
+		banner.add(SQLogo);
+		
+		bannerLogo = new JLabel("");
+		ImageIcon banneric= new ImageIcon(MainWindow.class.getResource("/resources/DB-Sql-Banner.png"));
+		Image image2 = banneric.getImage(); // transform it 
+		Image newimg1 = image2.getScaledInstance(650, 180,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+		banneric = new ImageIcon(newimg1);
+		bannerLogo.setIcon(banneric);
+		bannerLogo.setBounds(288, 6, 636, 188);
+		banner.add(bannerLogo);
+		
 		frame.setVisible(true);
 	}
 
@@ -262,4 +307,6 @@ public class MainWindow {
 		}
 		return sb.toString();
 	}
+	
+	
 }
