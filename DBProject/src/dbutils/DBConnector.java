@@ -80,7 +80,7 @@ public class DBConnector {
 			throw e;
 		}
 		
-		ArrayList<String> tables = extractTables(conn);
+		ArrayList<String> tables = extractTables(credentials,conn);
 		
 		try {
 			conn.close();
@@ -93,9 +93,9 @@ public class DBConnector {
 		return tables;
 	}
 	
-	private static ArrayList<String> extractTables(Connection conn) throws SQLException{
+	private static ArrayList<String> extractTables(DBCredentials info, Connection conn) throws SQLException{
 		var metaData = conn.getMetaData();
-		var rs = metaData.getTables(null,null,null,new String[] {"TABLE"});
+		var rs = metaData.getTables(info.getDbName(),null,null,new String[] {"TABLE"});
 		
 		var res = new ArrayList<String>();
 		while(rs.next()) {
