@@ -259,7 +259,7 @@ public class MainWindow {
 		Image newimg1 = image2.getScaledInstance(650, 180,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 		banneric = new ImageIcon(newimg1);
 		bannerLogo.setIcon(banneric);
-		bannerLogo.setBounds(288, 6, 636, 188);
+		bannerLogo.setBounds(288, 6, 631, 187);
 		banner.add(bannerLogo);
 		
 		frame.setVisible(true);
