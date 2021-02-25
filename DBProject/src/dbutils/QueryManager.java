@@ -2,6 +2,10 @@ package dbutils;
 
 import java.sql.*;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+
 public class QueryManager {
 	
 	private QueryManager() {}
@@ -53,5 +57,33 @@ public class QueryManager {
 		
 	}
 	
+	public static void handleQuery(Query q, JScrollPane target, JFrame frame) {
+		Object result = null;
+		target.setViewportView(null);
+		
+		try {
+			result = q.execute();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(frame, e1.getMessage());
+			return;
+			
+		}
+		
+		if(result.getClass() == QueryResult.class) {
+			QueryResult finalResult = (QueryResult)result;
+			JOptionPane.showMessageDialog(frame,String.format("The query was successful!\n%d row(s) returned.",finalResult.getRowsReturned()));
+			
+			var table = finalResult.getResultTable();
+			target.setViewportView(table);
+			table.validate();
+			
+		}
+		else {
+			JOptionPane.showMessageDialog(frame,String.format("The update was successful!\n%d row(s) affected.",(Integer)result));
+		}
+		
+	}
 
 }

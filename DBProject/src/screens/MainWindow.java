@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.sql.SQLException;
+
 
 import java.util.List;
 import java.util.Random;
@@ -16,8 +16,8 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import dbutils.DBCredentials;
+import dbutils.Query;
 import dbutils.QueryManager;
-import dbutils.QueryResult;
 
 
 
@@ -49,20 +49,17 @@ public class MainWindow {
 	private static final int height = 670;
 	private JFrame frame;
 	private JScrollPane scrollPane;
-	private JLabel updateQuery;
 	private JLabel searchQuery;
 	private JTextField searchField;
-	private JTextField updateField;
 	private JButton searchButton;
-	private JButton updateButton;
 	private JSeparator separator_1;
 	private JPanel banner;
 	private JLabel bannerLogo;
 	private JMenu queryMenu;
 	private JMenu optionMenu;
 	private JMenuItem logOutItem;
-	private ActionListener updateQueryMethod;
 	private ActionListener retrieveQueryMethod;
+	private JMenuItem batchQueryitem;
 
 	/**
 	 * Launch the application.
@@ -112,38 +109,10 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		
-		updateQueryMethod = (ActionEvent e)->{
-			
-			//DO UPDATE
-			int affectedRows = 0;
-			scrollPane.setViewportView(null);
-
-			String query = updateField.getText();
-			if(query == null || query.equals("")) {
-				JOptionPane.showMessageDialog(frame, "The field is empty...");
-				return;
-			}
-			
-			try {
-				affectedRows = QueryManager.genericUpdate(dbInfo,query);
-			}
-			catch(SQLException e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(frame, e1.getMessage());
-				updateField.setText("");
-				return;
-			}
-			
-			JOptionPane.showMessageDialog(frame,String.format("The update was successful!\n%d row(s) affected.",affectedRows));
-			updateField.setText("");
-			
-		};
 		
 		retrieveQueryMethod = (ActionEvent e)->{
 			
 			//DO QUERY
-			QueryResult result = null;
-			scrollPane.setViewportView(null);
 			
 			String query = searchField.getText();
 			if(query == null || query.equals("")) {
@@ -151,28 +120,9 @@ public class MainWindow {
 				return;
 			}
 			
-			try {
-				result = QueryManager.genericQuery(dbInfo, query);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(frame, e1.getMessage());
-				searchField.setText("");
-				return;
-				
-			}
+			Query q = new Query(dbInfo,query);
 			
-			JOptionPane.showMessageDialog(frame,String.format("The query was successful!\n%d row(s) returned.",result.getRowsReturned()));
-			/*
-			for(QueryResult.Row row : result) {
-				
-				textArea.append(row.toString()+"\n\n");
-			}
-			*/
-			var table = result.getResultTable();
-			scrollPane.setViewportView(table);
-			table.validate();
-			
+			QueryManager.handleQuery(q, scrollPane, frame);
 			searchField.setText("");
 			
 		};
@@ -226,6 +176,15 @@ public class MainWindow {
         	new LoginWindow();
         	frame.dispose();
         });
+        
+        batchQueryitem = new JMenuItem("batch queries");
+        batchQueryitem.setForeground(new Color(30, 144, 255));
+        batchQueryitem.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        batchQueryitem.addActionListener((ActionEvent e)->{
+        	
+        	new BatchQueryWindow(dbInfo, scrollPane);
+        });
+        optionMenu.add(batchQueryitem);
         optionMenu.add(logOutItem);
         
         menu1.add(tableInfo);
@@ -234,23 +193,17 @@ public class MainWindow {
 		
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 358, 930, 261);
+		scrollPane.setBounds(10, 342, 930, 277);
 		frame.getContentPane().add(scrollPane);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 341, 930, 12);
+		separator.setBounds(10, 324, 930, 12);
 		frame.getContentPane().add(separator);
-		
-		updateQuery = new JLabel("Update");
-		updateQuery.setForeground(new Color(30, 144, 255));
-		updateQuery.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
-		updateQuery.setBounds(10, 290, 77, 28);
-		frame.getContentPane().add(updateQuery);
 		
 		searchQuery = new JLabel("SQL");
 		searchQuery.setForeground(new Color(30, 144, 255));
 		searchQuery.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
-		searchQuery.setBounds(10, 240, 77, 28);
+		searchQuery.setBounds(10, 257, 77, 28);
 		searchQuery.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -266,34 +219,18 @@ public class MainWindow {
 		searchField = new JTextField();
 		searchField.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
 		searchField.setForeground(new Color(30, 144, 255));
-		searchField.setBounds(101, 240, 714, 29);
+		searchField.setBounds(68, 257, 745, 29);
 		frame.getContentPane().add(searchField);
 		searchField.setColumns(10);
-		
-		updateField = new JTextField();
-		updateField.setForeground(new Color(30, 144, 255));
-		updateField.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
-		updateField.setColumns(10);
-		updateField.setBounds(101, 290, 714, 29);
-		frame.getContentPane().add(updateField);
 		
 		//BUTTON THAT PERFORMS SIMPLE QUERY
 		searchButton = new JButton("query");
 		searchButton.setBackground(new Color(30, 144, 255));
 		searchButton.setForeground(new Color(30, 144, 255));
 		searchButton.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
-		searchButton.setBounds(823, 239, 117, 29);
+		searchButton.setBounds(823, 256, 117, 29);
 		searchButton.addActionListener(retrieveQueryMethod);
 		frame.getContentPane().add(searchButton);
-		
-		//BUTTON THAT PERFROMS UPDATES
-		updateButton = new JButton("execute");
-		updateButton.setForeground(new Color(30, 144, 255));
-		updateButton.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
-		updateButton.setBackground(new Color(30, 144, 255));
-		updateButton.setBounds(823, 290, 117, 29);
-		updateButton.addActionListener(updateQueryMethod);
-		frame.getContentPane().add(updateButton);
 		
 		separator_1 = new JSeparator();
 		separator_1.setBounds(10, 209, 930, 12);
