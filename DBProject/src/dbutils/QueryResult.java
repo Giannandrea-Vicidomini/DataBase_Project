@@ -1,5 +1,6 @@
 package dbutils;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -13,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
 
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 
 
@@ -144,18 +147,35 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 	
 	public JTable getResultTable() {
 		
-		JTable table = new JTable(toStringMatrix(),labels);
-		table.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
-		table.setRowHeight(50);
+		@SuppressWarnings("serial")
+		JTable table = new JTable(toStringMatrix(),labels){
+		    @Override
+		       public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+		           Component component = super.prepareRenderer(renderer, row, column);
+		           int rendererWidth = component.getPreferredSize().width;
+		           TableColumn tableColumn = getColumnModel().getColumn(column);
+		           tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+		           return component;
+		        }
+		    };
+		
+		
+		    //JTable table = new JTable(toStringMatrix(),labels);
+		table.setFont(new Font("Helvetica Neue", Font.BOLD, 16));
+		table.setRowHeight(55);
 		table.setForeground(new Color(10, 124, 235));
 		table.setShowGrid(true);
 		table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 		table.setGridColor(Color.BLUE);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
 		
 		JTableHeader tableHeader = table.getTableHeader();
 	    tableHeader.setBackground(new Color(30, 144, 255));
+		tableHeader.setOpaque(false);
 	    tableHeader.setForeground(Color.white);
 	    tableHeader.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+	    
 	    
 		return table;
 	}
