@@ -142,16 +142,18 @@ public class MainWindow {
 		mb.setForeground(new Color(30, 144, 255));
         frame.setJMenuBar(mb);
         
-        queryMenu = new JMenu("Default Queries");
-        /*
-         * 
-         * 
-         * 
-         *     ADDING QUERIES HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         * 
-         * 
-         */
-        mb.add(queryMenu);
+        if(dbInfo.getDbName().equals("steam")) {
+        	queryMenu = new JMenu("Default Queries");
+            /*
+             * 
+             * 
+             * 
+             *     ADDING QUERIES HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             * 
+             * 
+             */
+            mb.add(queryMenu);
+        }
         
         JMenu menu1 = new JMenu("Help");
         
@@ -278,16 +280,6 @@ public class MainWindow {
 	        tablesMenu.add(temp);
 		}
 		
-	}
-
-	private String buildHelpMessage() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("This database has the following tables:\n");
-		for(String table : tables) {
-			String token = String.format("- %s\n", table);
-			sb.append(token);
-		}
-		return sb.toString();
 	}
 	
 	
