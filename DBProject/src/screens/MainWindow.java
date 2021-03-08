@@ -155,15 +155,11 @@ public class MainWindow {
         
         JMenu menu1 = new JMenu("Help");
         
-        JMenuItem tableInfo = new JMenuItem("DB Info");
-        tableInfo.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        tableInfo.setForeground(new Color(30, 144, 255));
-        tableInfo.addActionListener((ActionEvent e)->{
-        	
-        	String message = buildHelpMessage();
-        	
-        	JOptionPane.showMessageDialog(frame,message);
-        });
+        
+        JMenu tables =new JMenu("Tables");
+        tables.setForeground(new Color(30, 144, 255));
+        tables.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        createTablesItems(tables);
         
         optionMenu = new JMenu("Options");
         mb.add(optionMenu);
@@ -187,7 +183,8 @@ public class MainWindow {
         optionMenu.add(batchQueryitem);
         optionMenu.add(logOutItem);
         
-        menu1.add(tableInfo);
+        menu1.add(tables);
+        
         mb.add(menu1);
 		//frame.getContentPane().add(textArea);
 		
@@ -209,8 +206,8 @@ public class MainWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				int index = rng.nextInt(tables.size());
-				searchField.setText(String.format("select * from %s",tables.get(index)));
+				int index = rng.nextInt(MainWindow.this.tables.size());
+				searchField.setText(String.format("select * from %s",MainWindow.this.tables.get(index)));
 			}
 			
 		});
@@ -265,6 +262,23 @@ public class MainWindow {
 		frame.setVisible(true);
 	}
 
+
+	private void createTablesItems(JMenu tablesMenu) {
+		JMenuItem temp = null;
+		for(var table : this.tables) {
+			temp = new JMenuItem(table);
+			temp.setForeground(new Color(30, 144, 255));
+	        temp.setBackground(new Color(255, 255, 255));
+	        temp.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+	        temp.addActionListener((ActionEvent e)->{
+	        	String q = String.format("select * from %s",table);
+	        	searchField.setText(q);
+	        });
+	        
+	        tablesMenu.add(temp);
+		}
+		
+	}
 
 	private String buildHelpMessage() {
 		StringBuilder sb = new StringBuilder();
