@@ -145,14 +145,8 @@ public class MainWindow {
         if(dbInfo.getDbName().equals("steamDB")) {
         	
         	queryMenu = new JMenu("Default Queries");
-            /*
-             * 
-             * 
-             * 
-             *     ADDING QUERIES HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-             * 
-             * 
-             */
+            
+             
         	JMenuItem updateQueryMenu = new JMenuItem("Add Account");
         	updateQueryMenu.setForeground(new Color(30, 144, 255));
         	updateQueryMenu.setBackground(new Color(255, 255, 255));
