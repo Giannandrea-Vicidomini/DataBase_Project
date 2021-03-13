@@ -179,6 +179,23 @@ public class MainWindow {
         	
         	queryMenu.add(deleteQueryMenu);
         	
+        	JMenuItem searchQueryMenu = new JMenuItem("Search Horror games");
+        	searchQueryMenu.setForeground(new Color(30, 144, 255));
+        	searchQueryMenu.setBackground(new Color(255, 255, 255));
+        	searchQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	searchQueryMenu.addActionListener((ActionEvent e)->{
+        		
+        		String qs = "select Gioco.id_gioco, titolo, nomegenere, datarilascio, Azienda.nome "
+        				+ "from (((Gioco join Genere on Gioco.id_gioco = Genere.id_gioco) "
+        				+ "join Produzione on Gioco.id_gioco = Produzione.idg) "
+        				+ "join Azienda on Produzione.piva = Azienda.partitaiva) "
+        				+ "where nomegenere = \"horror\"";
+        		searchField.setText(qs);
+        	
+            });
+        	
+        	queryMenu.add(searchQueryMenu);
+        	
         	
         	mb.add(queryMenu);
         }
