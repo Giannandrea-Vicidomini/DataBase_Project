@@ -165,7 +165,22 @@ public class MainWindow {
             });
         	
         	queryMenu.add(updateQueryMenu);
-            mb.add(queryMenu);
+            
+        	JMenuItem deleteQueryMenu = new JMenuItem("Delete Account");
+        	deleteQueryMenu.setForeground(new Color(30, 144, 255));
+        	deleteQueryMenu.setBackground(new Color(255, 255, 255));
+        	deleteQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	deleteQueryMenu.addActionListener((ActionEvent e)->{
+        		
+        		
+        		new DeleteAccountWindow(dbInfo);
+        	
+            });
+        	
+        	queryMenu.add(deleteQueryMenu);
+        	
+        	
+        	mb.add(queryMenu);
         }
         
         JMenu menu1 = new JMenu("Help");

@@ -2,9 +2,8 @@ package dbutils;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.math.BigDecimal;
 import java.sql.*;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -27,7 +26,7 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 		public Row(ArrayList<Object> elements) {
 			this.elements = elements;
 		}
-		
+		/*
 		private String convert(Object el, String type) {
 				String res = null;
 				
@@ -51,7 +50,7 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 				
 				return res;
 		}
-		
+		*/
 		@Override
 		public String toString() {
 			
@@ -60,10 +59,12 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 			for(int i = 0; i<elements.size(); i++) {
 				
 				if(i == elements.size()-1) {
-					bld.append(String.format("%s(  %s  )",labels[i],convert(elements.get(i),types[i])));
+					
+					bld.append(String.format("%s(  %s  )",labels[i],get(i)));
+					
 				}
 				else {
-					bld.append(String.format("%s(  %s  )",labels[i],convert(elements.get(i),types[i])));
+					bld.append(String.format("%s(  %s  )",labels[i],get(i)));
 					bld.append("      ");
 				}
 			}
@@ -73,7 +74,8 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 		}
 		
 		public String get(int pos) {
-			return convert(elements.get(pos),types[pos]);
+			//return convert(elements.get(pos),types[pos]);
+			return elements.get(pos).toString();
 		}
 	}
 	
@@ -178,6 +180,17 @@ public class QueryResult implements Iterable<QueryResult.Row>{
 	    
 	    
 		return table;
+	}
+	
+	public String[] getColumn(int index) {
+		int nRows = getRowsReturned();
+		String[] res = new String[nRows];
+		
+		for(int i=0; i<nRows;i++) {
+			res[i] = rows.get(i).get(index);
+		}
+		
+		return res;
 	}
 
 }
