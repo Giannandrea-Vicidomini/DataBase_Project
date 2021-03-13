@@ -67,9 +67,7 @@ public class AddAccountWindow {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -191,6 +189,13 @@ public class AddAccountWindow {
 			
 			var query = new Query(info,queryString); 
 			QueryManager.handleQuery(query, null, frame);
+			nickNameField.setText("");
+			emailField.setText("");
+			passwordField.setText("");
+			nationField.setText("");
+			regionField.setText("");
+			cityField.setText("");
+			creditField.setText("");
 			
 			
 			

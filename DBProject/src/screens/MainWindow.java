@@ -147,18 +147,18 @@ public class MainWindow {
         	queryMenu = new JMenu("Default Queries");
             
              
-        	JMenuItem updateQueryMenu = new JMenuItem("Add Account");
-        	updateQueryMenu.setForeground(new Color(30, 144, 255));
-        	updateQueryMenu.setBackground(new Color(255, 255, 255));
-        	updateQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        	updateQueryMenu.addActionListener((ActionEvent e)->{
+        	JMenuItem addQueryMenu = new JMenuItem("Add Account");
+        	addQueryMenu.setForeground(new Color(30, 144, 255));
+        	addQueryMenu.setBackground(new Color(255, 255, 255));
+        	addQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	addQueryMenu.addActionListener((ActionEvent e)->{
         		
         		
         		new AddAccountWindow(dbInfo);
         	
             });
         	
-        	queryMenu.add(updateQueryMenu);
+        	queryMenu.add(addQueryMenu);
             
         	JMenuItem deleteQueryMenu = new JMenuItem("Delete Account");
         	deleteQueryMenu.setForeground(new Color(30, 144, 255));
@@ -172,6 +172,19 @@ public class MainWindow {
             });
         	
         	queryMenu.add(deleteQueryMenu);
+        	
+        	JMenuItem updateQueryMenu = new JMenuItem("update Account");
+        	updateQueryMenu.setForeground(new Color(30, 144, 255));
+        	updateQueryMenu.setBackground(new Color(255, 255, 255));
+        	updateQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	updateQueryMenu.addActionListener((ActionEvent e)->{
+        		
+        		
+        		new UpdateAccountWindow(dbInfo);
+        	
+        		
+            });
+        	queryMenu.add(updateQueryMenu);
         	
         	JMenuItem searchQueryMenu = new JMenuItem("Search Horror games");
         	searchQueryMenu.setForeground(new Color(30, 144, 255));
@@ -189,7 +202,7 @@ public class MainWindow {
             });
         	
         	queryMenu.add(searchQueryMenu);
-        	
+        
         	
         	mb.add(queryMenu);
         }
