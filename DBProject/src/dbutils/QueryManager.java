@@ -59,7 +59,7 @@ public class QueryManager {
 	
 	public static void handleQuery(Query q, JScrollPane target, JFrame frame) {
 		Object result = null;
-		target.setViewportView(null);
+		
 		
 		try {
 			result = q.execute();
@@ -72,6 +72,7 @@ public class QueryManager {
 		}
 		
 		if(result.getClass() == QueryResult.class) {
+			target.setViewportView(null);
 			QueryResult finalResult = (QueryResult)result;
 			JOptionPane.showMessageDialog(frame,String.format("The query was successful!\n%d row(s) returned.",finalResult.getRowsReturned()));
 			

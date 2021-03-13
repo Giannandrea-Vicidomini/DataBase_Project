@@ -71,7 +71,7 @@ public class MainWindow {
 			public void run() {
 				try {
 					
-					DBCredentials info = new DBCredentials("root", "rootngul","steam");
+					DBCredentials info = new DBCredentials("root", "rootngul","steamDB");
 					
 					String[] elems = {"Dio","cane"};
 					MainWindow window = new MainWindow(info,Arrays.asList(elems));
@@ -158,8 +158,9 @@ public class MainWindow {
         	updateQueryMenu.setBackground(new Color(255, 255, 255));
         	updateQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
         	updateQueryMenu.addActionListener((ActionEvent e)->{
-            
-        	
+        		
+        		
+        		new AddAccountWindow(dbInfo);
         	
             });
         	

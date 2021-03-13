@@ -79,7 +79,7 @@ public class BatchQueryWindow {
 		ActionListener loadList = (ActionEvent e)->{
 			if(chosenFile!=null) {
 				
-			
+				
 				MouseAdapter mouseListener = new MouseAdapter() {
 			      public void mouseClicked(MouseEvent mouseEvent) {
 			        @SuppressWarnings("unchecked")
