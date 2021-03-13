@@ -163,7 +163,7 @@ public class LoginWindow {
 			public void mouseClicked(MouseEvent e) {
 				textField.setText("root");
 				passwordField.setText("rootngul");
-				schemaField.setText("steam");
+				schemaField.setText("steamDB");
 			}
 		
 		}); 

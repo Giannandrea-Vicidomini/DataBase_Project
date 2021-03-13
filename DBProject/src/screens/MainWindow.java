@@ -142,7 +142,8 @@ public class MainWindow {
 		mb.setForeground(new Color(30, 144, 255));
         frame.setJMenuBar(mb);
         
-        if(dbInfo.getDbName().equals("steam")) {
+        if(dbInfo.getDbName().equals("steamDB")) {
+        	
         	queryMenu = new JMenu("Default Queries");
             /*
              * 
@@ -152,6 +153,17 @@ public class MainWindow {
              * 
              * 
              */
+        	JMenuItem updateQueryMenu = new JMenuItem("Add Account");
+        	updateQueryMenu.setForeground(new Color(30, 144, 255));
+        	updateQueryMenu.setBackground(new Color(255, 255, 255));
+        	updateQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	updateQueryMenu.addActionListener((ActionEvent e)->{
+            
+        	
+        	
+            });
+        	
+        	queryMenu.add(updateQueryMenu);
             mb.add(queryMenu);
         }
         
