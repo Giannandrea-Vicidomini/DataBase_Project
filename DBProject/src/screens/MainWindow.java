@@ -208,7 +208,22 @@ public class MainWindow {
         }
         
         JMenu menu1 = new JMenu("Help");
-        
+        if(dbInfo.getDbName().equals("steamDB")) {
+        	
+        	JMenuItem schemaMenu = new JMenuItem("Schema");
+            schemaMenu.setForeground(new Color(30, 144, 255));
+            schemaMenu.setBackground(new Color(255, 255, 255));
+            schemaMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+            schemaMenu.addActionListener((ActionEvent e)->{
+        		
+        		
+        		new SchemaWindow();
+        	
+        		
+            });
+        	
+        	menu1.add(schemaMenu);
+        }	
         
         JMenu tables =new JMenu("Tables");
         tables.setForeground(new Color(30, 144, 255));
