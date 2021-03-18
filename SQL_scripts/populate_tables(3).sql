@@ -136,7 +136,7 @@ insert into Supporto values ("D0004","Adeloth", "2016-11-19");
 insert into Supporto values ("D0005","Sevurith", "2018-07-23");
 
 
-#INSERIMENTO GESTIONE
+#GESTIONE
 insert into Gestione values("D0003","G0001");
 insert into Gestione values("D0005","G0002");
 insert into Gestione values("D0002","G0003");
@@ -157,6 +157,26 @@ insert into Gestione values("D0005","G0017");
 insert into Gestione values("D0002","G0018");
 insert into Gestione values("D0001","G0019");
 insert into Gestione values("D0004","G0020");
+insert into Gestione values("D0007","G0001");
+insert into Gestione values("D0007","G0002");
+insert into Gestione values("D0007","G0003");
+insert into Gestione values("D0007","G0004");
+insert into Gestione values("D0007","G0005");
+insert into Gestione values("D0007","G0006");
+insert into Gestione values("D0007","G0007");
+insert into Gestione values("D0007","G0008");
+insert into Gestione values("D0007","G0009");
+insert into Gestione values("D0007","G0010");
+insert into Gestione values("D0007","G0011");
+insert into Gestione values("D0007","G0012");
+insert into Gestione values("D0007","G0013");
+insert into Gestione values("D0007","G0014");
+insert into Gestione values("D0007","G0015");
+insert into Gestione values("D0007","G0016");
+insert into Gestione values("D0007","G0017");
+insert into Gestione values("D0007","G0018");
+insert into Gestione values("D0007","G0019");
+insert into Gestione values("D0007","G0020");
 
 #PRODUZIONE
 insert into Produzione values ("08944524578", "G0005");
