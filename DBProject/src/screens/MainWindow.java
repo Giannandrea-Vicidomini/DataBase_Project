@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
-
 import java.util.List;
 import java.util.Random;
 
@@ -202,6 +199,41 @@ public class MainWindow {
             });
         	
         	queryMenu.add(searchQueryMenu);
+        	
+        	JMenuItem searchNAAQueryMenu = new JMenuItem("Search NAA");
+        	searchNAAQueryMenu.setForeground(new Color(30, 144, 255));
+        	searchNAAQueryMenu.setBackground(new Color(255, 255, 255));
+        	searchNAAQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	searchNAAQueryMenu.addActionListener((ActionEvent e)->{
+        		
+        		String qs = "select D.nome as Nome , A.id_assistente as Assistente, count(*) as NAA "
+        				+ "from Dipendente D join Assistente A on D.id_dipendente = A.id_assistente "
+        				+ "join Supporto S on A.id_assistente = S.assistente "
+        				+ "group by A.id_assistente";
+        		
+        		searchField.setText(qs);
+        	
+            });
+        	
+        	queryMenu.add(searchNAAQueryMenu);
+        	
+        	JMenuItem searchNGAQueryMenu = new JMenuItem("Search NGA");
+        	searchNGAQueryMenu.setForeground(new Color(30, 144, 255));
+        	searchNGAQueryMenu.setBackground(new Color(255, 255, 255));
+        	searchNGAQueryMenu.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        	searchNGAQueryMenu.addActionListener((ActionEvent e)->{
+        		
+        		
+        		String qs = "select A.nickname as Account, count(A.nickname) as NGA "
+        				+ "from Account A join Acquisto Q on A.nickname = Q.username "
+        				+ "join Gioco G on Q.idg = G.id_gioco "
+        				+ "group by A.nickname";
+        		
+        		searchField.setText(qs);
+        	
+            });
+        	
+        	queryMenu.add(searchNGAQueryMenu);
         
         	
         	mb.add(queryMenu);
@@ -285,16 +317,16 @@ public class MainWindow {
 		searchField = new JTextField();
 		searchField.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
 		searchField.setForeground(new Color(30, 144, 255));
-		searchField.setBounds(68, 257, 745, 29);
+		searchField.setBounds(68, 244, 745, 58);
 		frame.getContentPane().add(searchField);
 		searchField.setColumns(10);
 		
 		//BUTTON THAT PERFORMS SIMPLE QUERY
-		searchButton = new JButton("query");
+		searchButton = new JButton("RUN QUERY");
 		searchButton.setBackground(new Color(30, 144, 255));
 		searchButton.setForeground(new Color(30, 144, 255));
-		searchButton.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
-		searchButton.setBounds(823, 256, 117, 29);
+		searchButton.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+		searchButton.setBounds(820, 245, 120, 56);
 		searchButton.addActionListener(retrieveQueryMethod);
 		frame.getContentPane().add(searchButton);
 		
