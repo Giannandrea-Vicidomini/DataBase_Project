@@ -64,7 +64,10 @@ public class BatchQueryWindow {
 		
 		ActionListener chooseFile = (ActionEvent e)->{
 			
-			JFileChooser fc = new JFileChooser();
+			String userhome = System.getProperty("user.home");
+			JFileChooser fc = new JFileChooser(userhome);
+		
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fc.setCurrentDirectory(new File(System.getProperty("user.home")));
 			int result = fc.showOpenDialog(frame);
 			
