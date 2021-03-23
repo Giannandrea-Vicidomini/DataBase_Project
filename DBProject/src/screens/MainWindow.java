@@ -139,7 +139,7 @@ public class MainWindow {
 		mb.setForeground(new Color(30, 144, 255));
         frame.setJMenuBar(mb);
         
-        if(dbInfo.getDbName().equals("steamDB")) {
+        if(dbInfo.getDbName().toLowerCase().equals("steamdb")) {
         	
         	queryMenu = new JMenu("Default Queries");
             
@@ -240,7 +240,7 @@ public class MainWindow {
         }
         
         JMenu menu1 = new JMenu("Help");
-        if(dbInfo.getDbName().equals("steamDB")) {
+        if(dbInfo.getDbName().toLowerCase().equals("steamdb")) {
         	
         	JMenuItem schemaMenu = new JMenuItem("Schema");
             schemaMenu.setForeground(new Color(30, 144, 255));
